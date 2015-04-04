@@ -16,7 +16,7 @@
 
   <md-list>
     <md-list-item ng-repeat="todo in awesomeThings">
-      <md-checkbox>{{todo.name}}　<span style="color: #999">{{todo.info | date: 'M/d HH:mm'}}</span></md-checkbox>
+      <md-checkbox ng-model="todo.done" ng-change="updateThing(todo)">{{todo.name}}　<span style="color: #999">{{todo.info | date: 'M/d HH:mm'}}</span></md-checkbox>
     </md-list-item>
   </md-list>
 

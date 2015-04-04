@@ -13,6 +13,11 @@ angular.module('swTodoApp')
       socket.syncUpdates('thing', $scope.awesomeThings);
     });
 
+    $scope.updateThing = function (updatedThing) {
+      $log.log(updatedThing);
+      $http.put('/api/things/' + updatedThing._id, updatedThing);
+    };
+
     $scope.addThing = function() {
       if($scope.newThing === '') {
         return;
