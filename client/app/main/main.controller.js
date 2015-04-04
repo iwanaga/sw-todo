@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('swTodoApp')
-  .controller('MainCtrl', function ($scope, $http, $animate, $mdToast, $log, socket) {
+  .controller('MainCtrl', function ($scope, $http, $animate, $mdToast, $log, socket, swService) {
     $scope.awesomeThings = [];
     $scope.newTodo = {
       name: '',
@@ -35,6 +35,8 @@ angular.module('swTodoApp')
     $scope.onClick = function () {
       $scope.addThing();
     };
+
+    swService();
 
     $scope.showToast = function (string) {
       $mdToast.show(
