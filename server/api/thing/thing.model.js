@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
 
 var ThingSchema = new Schema({
   name: String,
-  info: String,
+  info: Date,
   active: Boolean
 });
 
