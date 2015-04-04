@@ -31,7 +31,7 @@ angular.module('swTodoApp')
       $scope.newTodo.info = Date.parse($scope.newTodo.info);
       sw.setSubscribe($scope.newTodo.info);
       $http.post('/api/things', $scope.newTodo).success(function (data) {
-        localData = localStorageService.get('awesomeThings');
+        var localData = localStorageService.get('awesomeThings');
         localData.push(data);
         localStorageService.set('awesomeThings', localData);
         $scope.newTodo.name = '';
