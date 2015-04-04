@@ -6,7 +6,7 @@
     </md-input-container>
     <md-input-container>
       <label>締め切り</label>
-      <input ng-model="newTodo.info">
+      <input type="datetime-local" ng-model="newTodo.info">
     </md-input-container>
 
     <md-button class="md-raised md-primary" ng-click="onClick()">追加する</md-button>
@@ -16,7 +16,7 @@
 
   <md-list>
     <md-list-item ng-repeat="todo in awesomeThings">
-      <md-checkbox>{{todo.name}}</md-checkbox>
+      <md-checkbox>{{todo.name}}　<span style="color: #999">{{todo.info | date: 'M/d HH:mm'}}</span></md-checkbox>
     </md-list-item>
   </md-list>
 

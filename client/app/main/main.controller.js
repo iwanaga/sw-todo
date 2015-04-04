@@ -5,7 +5,7 @@ angular.module('swTodoApp')
     $scope.awesomeThings = [];
     $scope.newTodo = {
       name: '',
-      info: null
+      info: new Date()
     };
 
     $http.get('/api/things').success(function(awesomeThings) {
@@ -17,10 +17,11 @@ angular.module('swTodoApp')
       if($scope.newThing === '') {
         return;
       }
+      $scope.newTodo.info = Date.parse($scope.newTodo.info);
       $http.post('/api/things', $scope.newTodo).success(function (data) {
         $log.log(data);
         $scope.newTodo.name = '';
-        $scope.newTodo.info = null;
+        $scope.newTodo.info = new Date();
       });
     };
 
