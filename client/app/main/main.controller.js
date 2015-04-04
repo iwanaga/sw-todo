@@ -5,7 +5,7 @@ angular.module('swTodoApp')
     $scope.awesomeThings = [];
     $scope.newTodo = {
       name: '',
-      info: (new Date()).toLocaleString()
+      info: new Date()
     };
 
     $http.get('/api/things').success(function(awesomeThings) {
@@ -21,7 +21,7 @@ angular.module('swTodoApp')
       $http.post('/api/things', $scope.newTodo).success(function (data) {
         $log.log(data);
         $scope.newTodo.name = '';
-        $scope.newTodo.info = (new Date()).toLocaleString();
+        $scope.newTodo.info = new Date();
       });
     };
 
