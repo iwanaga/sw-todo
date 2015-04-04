@@ -22,11 +22,16 @@ exports.index = function(req, res) {
 
 // Get a single thing
 exports.show = function(req, res) {
-  Thing.findById(req.params.id, function (err, thing) {
+  Thing.findOne({info: {$gt: new Date()}}, function (err, thing) {
     if(err) { return handleError(res, err); }
     if(!thing) { return res.send(404); }
     return res.json(thing);
   });
+  /*Thing.findById(req.params.id, function (err, thing) {
+    if(err) { return handleError(res, err); }
+    if(!thing) { return res.send(404); }
+    return res.json(thing);
+  });*/
 };
 
 // Creates a new thing in the DB.

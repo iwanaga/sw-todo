@@ -51,6 +51,9 @@ angular.module('swTodoApp')
     };
 
     $scope.showToast = function (string) {
+      $http.get('/api/things/warning').success(function(awesomeThings) {
+        $log.log(awesomeThings);
+      });
       $mdToast.show(
         $mdToast.simple()
           .content(string)
