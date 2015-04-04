@@ -5,14 +5,16 @@ angular.module('swTodoApp')
         subscriptionId,
         subscriptionEndpoint;
 
-      var pushButton = document.querySelector('.js-push-button');
-      pushButton.addEventListener('click', function() {
+      function setSubscribe(info) {
         if (isPushEnabled) {
           unsubscribe();
         } else {
-          subscribe();
+          subscribe(new Date(info));
         }
-      });
+      }
+
+      // var pushButton = document.querySelector('.js-push-button');
+      // pushButton.addEventListener('click', setSubscribe);
 
       // Check that service workers are supported, if so, progressively
       // enhance and add push messaging support, otherwise continue without it.
@@ -74,7 +76,7 @@ angular.module('swTodoApp')
           });
         });
       }
-      function subscribe() {
+      function subscribe(info) {
         // Disable the button so it can't be changed while
         // we process the permission request
         var pushButton = document.querySelector('.js-push-button');
@@ -91,7 +93,7 @@ angular.module('swTodoApp')
               // TODO: Send the subscription.subscriptionId and
               // subscription.endpoint to your server
               // and save it to send a push message at a later date
-              return sendSubscriptionToServer(subscription);
+              return sendSubscriptionToServer(subscription, info);
             })
             .catch(function(e) {
               if (Notification.permission === 'denied') {
@@ -114,18 +116,22 @@ angular.module('swTodoApp')
       }
 
 
-      function sendSubscriptionToServer(subscription) {
+      function sendSubscriptionToServer(subscription, info) {
+        if (!info) {
+          info = new Date();
+        }
+
         subscriptionId = subscription.subscriptionId;
         subscriptionEndpoint = subscription.endpoint;
-        console.log(subscriptionId, subscriptionEndpoint);
         $mdToast.show(
           $mdToast.simple()
             .content(subscriptionId)
             .position('top right')
             .hideDelay(2000)
         );
-
-        var url = "https://script.google.com/macros/s/AKfycbyNlur8xtxCF0Ol0UJUckdd0V7hWNJZX94O9Sl_cMl6dMCP8g/exec?id=" + subscription.subscriptionId + "&endpoint=" + subscription.endpoint;
+        var datetime = info.getFullYear() + '-' + lPad(info.getMonth() + 1, 2) + '-' + lPad(info.getDate(), 2) + 'T' + lPad(info.getHours(), 2) + ':' + lPad(info.getMinutes(), 2) + ':' + lPad(info.getSeconds(), 0) + '+0900';
+        console.log(datetime);
+        var url = "https://script.google.com/macros/s/AKfycbwnGirE7YUyjJwJrQMP9QqhWVij7MjeU0GDY6STyQ/dev?id=" + subscription.subscriptionId + "&endpoint=" + subscription.endpoint + '&datetime=' + datetime;
         fetch(url);
       }
 
@@ -175,6 +181,18 @@ angular.module('swTodoApp')
             });
         });
       }
+
+      function lPad(val, digit) {
+        val = val + '';
+        while (val.length < digit) {
+          val = '0' + val;
+        }
+        return val;
+      }
+
+      return {
+        setSubscribe: setSubscribe
+      };
     };
 
   }]);
