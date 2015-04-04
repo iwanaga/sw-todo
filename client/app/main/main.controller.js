@@ -14,7 +14,7 @@ angular.module('swTodoApp')
     });
 
     $scope.updateThing = function (updatedThing) {
-      updatedThing.done = true;
+      $log.log(updatedThing);
       $http.put('/api/things/' + updatedThing._id, updatedThing);
     };
 
