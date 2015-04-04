@@ -11,6 +11,10 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <!-- Service Worker Manifest -->
+    <link rel="manifest" href="manifest.json">
+
     <!-- build:css(client) app/vendor.css -->
       <!-- bower:css -->
       <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
@@ -34,8 +38,9 @@
 
     <!-- Add your site or application content here -->
     <div ui-view=""></div>
-
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+    <button class="js-push-button" disabled>Enable Push Messages</button>
+    <!-- Google Analyti
+    cs: change UA-XXXXX-X to be your site's ID -->
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -84,6 +89,7 @@
           <script src="components/navbar/navbar.controller.js"></script>
           <script src="components/socket/socket.service.js"></script>
           <!-- endinjector -->
+          <script src="service-worker/subscribe.js"></script>
         <!-- endbuild -->
 </body>
 </html>
