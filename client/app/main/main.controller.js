@@ -3,7 +3,10 @@
 angular.module('swTodoApp')
   .controller('MainCtrl', function ($scope, $http, socket) {
     $scope.awesomeThings = [];
-
+    $scope.newTodo = {
+      name: '',
+      info: null
+    };
     $http.get('/api/things').success(function(awesomeThings) {
       $scope.awesomeThings = awesomeThings;
       socket.syncUpdates('thing', $scope.awesomeThings);
