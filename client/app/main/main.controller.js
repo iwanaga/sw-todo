@@ -1,8 +1,12 @@
 'use strict';
 
 angular.module('swTodoApp')
-  .controller('MainCtrl', function ($scope, $http, socket) {
+  .controller('MainCtrl', function ($scope, $http, $log, socket) {
     $scope.awesomeThings = [];
+    $scope.newTodo = {
+      name: '',
+      info: null
+    };
 
     $http.get('/api/things').success(function(awesomeThings) {
       $scope.awesomeThings = awesomeThings;
@@ -13,8 +17,11 @@ angular.module('swTodoApp')
       if($scope.newThing === '') {
         return;
       }
-      $http.post('/api/things', { name: $scope.newThing });
-      $scope.newThing = '';
+      $http.post('/api/things', $scope.newTodo).success(function (data) {
+        $log.log(data);
+        $scope.newTodo.name = '';
+        $scope.newTodo.info = null;
+      });
     };
 
     $scope.deleteThing = function(thing) {
@@ -24,4 +31,8 @@ angular.module('swTodoApp')
     $scope.$on('$destroy', function () {
       socket.unsyncUpdates('thing');
     });
+
+    $scope.onClick = function () {
+      $scope.addThing();
+    };
   });

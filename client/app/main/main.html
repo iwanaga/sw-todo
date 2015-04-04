@@ -1,5 +1,22 @@
-<md-list>
-  <md-list-item ng-repeat="todo in awesomeThings">
-    <md-checkbox>{{todo.name}}</md-checkbox>
-  </md-list-item>
-</md-list>
+<md-content class="md-padding">
+  <md-content class="md-padding">
+    <md-input-container>
+      <label>TODOを入力</label>
+      <input ng-model="newTodo.name">
+    </md-input-container>
+    <md-input-container>
+      <label>締め切り</label>
+      <input ng-model="newTodo.info">
+    </md-input-container>
+
+    <md-button class="md-raised md-primary" ng-click="onClick()">追加する</md-button>
+  </md-content>
+
+  <md-divider></md-divider>
+
+  <md-list>
+    <md-list-item ng-repeat="todo in awesomeThings">
+      <md-checkbox>{{todo.name}}</md-checkbox>
+    </md-list-item>
+  </md-list>
+</md-content>
