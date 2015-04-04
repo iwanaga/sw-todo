@@ -8,14 +8,15 @@ angular.module('swTodoApp')
       info: new Date()
     };
 
-    var sw = swService();
+    var sw = swService(),
+      localThings = localStorageService.get('awesomeThings');
+
+      $scope.awesomeThings = localThings;
 
     $http.get('/api/things').success(function(awesomeThings) {
       $scope.awesomeThings = awesomeThings;
       socket.syncUpdates('thing', $scope.awesomeThings);
-      awesomeThings.forEach(function(data) {
-        localStorageService.set(data._id, data);
-      });
+      localStorageService.set('awesomeThings', awesomeThings);
     });
 
     $scope.updateThing = function (updatedThing) {
@@ -30,10 +31,11 @@ angular.module('swTodoApp')
       $scope.newTodo.info = Date.parse($scope.newTodo.info);
       sw.setSubscribe($scope.newTodo.info);
       $http.post('/api/things', $scope.newTodo).success(function (data) {
-        localStorageService.set(data._id, data);
+        localData = localStorageService.get('awesomeThings');
+        localData.push(data);
+        localStorageService.set('awesomeThings', localData);
         $scope.newTodo.name = '';
         $scope.newTodo.info = new Date();
-
       });
 
     };
